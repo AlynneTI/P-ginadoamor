@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nosso Amor</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="floating-hearts"></div>
+
+  <div class="container">
+    <div id="musicPlayer"></div>
+    <div id="imageContainer" class="photo-box"></div>
+    <div id="loveTimer" class="timer"></div>
+    <div id="finalMessage" class="final-message"></div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const spotify = params.get('spotify');
+    const date = params.get('date');
+    const message = decodeURIComponent(params.get('msg'));
+    const image = sessionStorage.getItem('photo');
+
+    if (spotify && spotify.includes("spotify.com/track")) {
+      const embed = spotify.replace("/track/", "/embed/track/");
+      document.getElementById("musicPlayer").innerHTML = `<iframe src="${embed}" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`;
+    }
+
+    if (image) {
+      const img = document.createElement('img');
+      img.src = image;
+      document.getElementById("imageContainer").appendChild(img);
+    }
+
+    document.getElementById("finalMessage").innerText = message;
+
+    function updateTimer() {
+      const start = new Date(date);
+      const now = new Date();
+      let diff = now - start;
+
+      const seconds = Math.floor(diff / 1000) % 60;
+      const minutes = Math.floor(diff / (1000 * 60)) % 60;
+      const hours = Math.floor(diff / (1000 * 60 * 60)) % 24;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+      const years = Math.floor(days / 365);
+      const months = Math.floor((days % 365) / 30);
+      const remainingDays = (days % 365) % 30;
+
+      document.getElementById("loveTimer").innerHTML =
+        `${years} anos, ${months} meses, ${remainingDays} dias, ${hours} horas, ${minutes} minutos e ${seconds} segundos`;
+    }
+
+    setInterval(updateTimer, 1000);
+    updateTimer();
+    if (spotify && spotify.includes("spotify.com/track")) {
+  const trackId = spotify.split("/track/")[1]?.split("?")[0];
+  const embed = `https://open.spotify.com/embed/track/${trackId}`;
+  document.getElementById("musicPlayer").innerHTML = `
+    <iframe src="${embed}" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+  `;
+} else {
+  document.getElementById("musicPlayer").innerText = "Link inválido do Spotify.";
+}
+
+  </script>
+</body>
+</html>

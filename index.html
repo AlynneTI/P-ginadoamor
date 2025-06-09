@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nosso Amor</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Crie sua página do amor 💖</h1>
+
+    <label>Foto do casal:</label>
+    <input type="file" id="imageUpload" accept="image/*" />
+    <div id="imagePreview" class="photo-box"></div>
+
+    <label>Link da música (Spotify):</label>
+    <input type="text" id="spotifyLink" placeholder="https://open.spotify.com/track/..." />
+
+    <label>Data do namoro:</label>
+    <input type="date" id="startDate" />
+
+    <label>Mensagem especial:</label>
+    <textarea id="loveMessage" placeholder="Escreva algo bonito..." rows="4"></textarea>
+
+    <button onclick="goToDisplayPage()">Começar</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
